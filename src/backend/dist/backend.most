@@ -1,0 +1,273 @@
+// Version: 1.0.0
+type AddOn__96944308 = {category : Text; id : Text; name : Text; price : Nat};
+type Address__982854239 =
+  {
+    city : Text;
+    displayName : Text;
+    id : Text;
+    var isDefault : Bool;
+    lat : Float;
+    lng : Float;
+    principal : Principal;
+    state : Text;
+    street : Text;
+    zipCode : Text
+  };
+type Category__227350253 =
+  {
+    description : Text;
+    id : Text;
+    imageUrl : Text;
+    name : Text;
+    sortOrder : Nat
+  };
+type Coupon__658206768 =
+  {
+    code : Text;
+    discountType : DiscountType__591429536;
+    discountValue : Nat;
+    expiresAt : ?Time__900049286;
+    freeProductId : ?Text;
+    isActive : Bool;
+    maxUsages : Nat;
+    minOrderAmount : Nat;
+    requiresMinQty : Nat;
+    triggerProductId : ?Text;
+    var usageCount : Nat
+  };
+type CrustVariant__320037980 =
+  {crust : Crust__373649543; displayName : Text; extraPrice : Nat};
+type Crust__373649543 = {#hand_tossed; #stuffed; #thin};
+type Data__159895909<T> = {var count : Nat__490723111; elements : [var ?T]};
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type DeliveryLocation__212497957 = {lat : Float; lng : Float};
+type DiscountType__591429536 = {#bogo; #flat; #free_delivery; #percentage};
+type Int__270357528 = Int__616954475;
+type Int__616954475 = Int;
+type Internal__667636161<T> =
+  {children : [var ?Node__92254746<T>]; data : Data__159895909<T>};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__520550824<T> = {data : Data__159895909<T>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type List__415060402<T> = List__790383201<T>;
+type List__790383201<T> =
+  {
+    var blockIndex : Nat__490723111;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__490723111
+  };
+type LoyaltyAccount__754050701 =
+  {
+    joinedAt : Time__900049286;
+    var points : Nat;
+    var tier : LoyaltyTier__1004910043;
+    var totalPointsEarned : Nat;
+    userId : Principal
+  };
+type LoyaltyTier__1004910043 = {#bronze; #gold; #silver};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type Node__92254746<T> =
+  {#internal : Internal__667636161<T>; #leaf : Leaf__520550824<T>};
+type NotificationType__908192046 =
+  {
+    #couponExpiry;
+    #orderCancelled;
+    #orderConfirmed;
+    #orderDelivered;
+    #orderPreparing;
+    #outForDelivery;
+    #promoAlert
+  };
+type Notification__264708741 =
+  {
+    createdAt : Time__900049286;
+    id : Text;
+    message : Text;
+    notifType : NotificationType__908192046;
+    orderId : ?Text;
+    var read : Bool;
+    title : Text;
+    userId : Principal
+  };
+type OrderItem__241319351 =
+  {
+    addOns : [Text];
+    crust : Text;
+    imageUrl : Text;
+    productId : Text;
+    productName : Text;
+    quantity : Nat;
+    size : Text;
+    totalPrice : Nat;
+    unitPrice : Nat
+  };
+type OrderReview__316459576 =
+  {
+    comment : ?Text;
+    createdAt : Time__900049286;
+    customerId : Principal;
+    id : Text;
+    orderId : Text;
+    overallRating : Nat;
+    productRatings : [ProductRating__113508323]
+  };
+type OrderStatus__272730104 =
+  {
+    #cancelled;
+    #confirmed;
+    #delivered;
+    #out_for_delivery;
+    #placed;
+    #preparing
+  };
+type Order__141779993 =
+  {
+    var cancellationReason : ?Text;
+    couponCode : ?Text;
+    customerId : Principal;
+    deliveryAddress : Text;
+    deliveryFee : Nat;
+    var deliveryPartnerId : ?Principal;
+    var deliveryPartnerLocation : ?DeliveryLocation__212497957;
+    discountAmount : Nat;
+    estimatedDeliveryMinutes : Nat;
+    id : Text;
+    items : [OrderItem__241319351];
+    var paymentIntentId : ?Text;
+    var paymentRefunded : Bool;
+    var paymentVerified : Bool;
+    placedAt : Time__900049286;
+    var status : OrderStatus__272730104;
+    subtotal : Nat;
+    total : Nat;
+    var updatedAt : Time__900049286
+  };
+type PointsTransaction__908563437 =
+  {
+    createdAt : Time__900049286;
+    description : Text;
+    id : Text;
+    orderId : ?Text;
+    points : Int;
+    txnType : {#earned; #redeemed};
+    userId : Principal
+  };
+type ProductRating__113508323 = {productId : Text; rating : Nat};
+type Product__986497020 =
+  {
+    addOns : [Text];
+    basePrice : Nat;
+    categoryId : Text;
+    crusts : [CrustVariant__320037980];
+    description : Text;
+    id : Text;
+    imageUrl : Text;
+    isArchived : Bool;
+    isAvailable : Bool;
+    name : Text;
+    rating : Float;
+    ratingCount : Nat;
+    sizes : [SizeVariant__1050372000]
+  };
+type PromoBanner__978617850 =
+  {
+    couponCode : ?Text;
+    createdAt : Time__900049286;
+    ctaLink : Text;
+    ctaText : Text;
+    description : Text;
+    id : Text;
+    imageUrl : Text;
+    var isActive : Bool;
+    priority : Nat;
+    title : Text
+  };
+type Role__490071529 = {#admin; #customer; #delivery_partner};
+type SizeVariant__1050372000 =
+  {displayName : Text; priceMultiplier : Float; size : Size__253292155};
+type Size__253292155 = {#large; #medium; #small};
+type Time__796480547 = Int__270357528;
+type Time__900049286 = Time__796480547;
+type UserProfile__775633023 =
+  {
+    createdAt : Time__900049286;
+    name : Text;
+    phone : Text;
+    principal : Principal;
+    role : Role__490071529
+  };
+actor {
+  stable addOns :
+    {
+      var root : Node__46230540<Text, AddOn__96944308>;
+      var size : Nat__490723111
+    };
+  stable addresses :
+    {
+      var root :
+        Node__46230540<Principal, List__415060402<Address__982854239>>;
+      var size : Nat__490723111
+    };
+  stable adminList :
+    {var root : Node__92254746<Principal>; var size : Nat__490723111};
+  stable banners :
+    {
+      var root : Node__46230540<Text, PromoBanner__978617850>;
+      var size : Nat__490723111
+    };
+  stable categories :
+    {
+      var root : Node__46230540<Text, Category__227350253>;
+      var size : Nat__490723111
+    };
+  stable coupons :
+    {
+      var root : Node__46230540<Text, Coupon__658206768>;
+      var size : Nat__490723111
+    };
+  stable loyaltyAccounts :
+    {
+      var root : Node__46230540<Principal, LoyaltyAccount__754050701>;
+      var size : Nat__490723111
+    };
+  stable loyaltyTransactions :
+    {
+      var root : Node__46230540<Text, PointsTransaction__908563437>;
+      var size : Nat__490723111
+    };
+  stable notifications :
+    {
+      var root : Node__46230540<Text, Notification__264708741>;
+      var size : Nat__490723111
+    };
+  stable orders :
+    {
+      var root : Node__46230540<Text, Order__141779993>;
+      var size : Nat__490723111
+    };
+  stable products :
+    {
+      var root : Node__46230540<Text, Product__986497020>;
+      var size : Nat__490723111
+    };
+  stable profiles :
+    {
+      var root : Node__46230540<Principal, UserProfile__775633023>;
+      var size : Nat__490723111
+    };
+  stable reviews :
+    {
+      var root : Node__46230540<Text, OrderReview__316459576>;
+      var size : Nat__490723111
+    };
+  stable userNotifIndex :
+    {
+      var root : Node__46230540<Principal, List__415060402<Text>>;
+      var size : Nat__490723111
+    }
+};

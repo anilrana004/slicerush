@@ -1,0 +1,385 @@
+type UsersResult = 
+ variant {
+   err: text;
+   ok: vec UserProfile;
+ };
+type UserProfile = 
+ record {
+   createdAt: Time;
+   name: text;
+   phone: text;
+   "principal": principal;
+   role: Role;
+ };
+type Time = int;
+type SizeVariant = 
+ record {
+   displayName: text;
+   priceMultiplier: float64;
+   size: Size;
+ };
+type Size = 
+ variant {
+   large;
+   medium;
+   small;
+ };
+type Role = 
+ variant {
+   admin;
+   customer;
+   delivery_partner;
+ };
+type ReviewResult = 
+ variant {
+   err: text;
+   ok: OrderReview;
+ };
+type PromoBannerPublic = 
+ record {
+   couponCode: opt text;
+   createdAt: Time;
+   ctaLink: text;
+   ctaText: text;
+   description: text;
+   id: text;
+   imageUrl: text;
+   isActive: bool;
+   priority: nat;
+   title: text;
+ };
+type ProductUpdate = 
+ record {
+   basePrice: opt nat;
+   categoryId: opt text;
+   description: opt text;
+   imageUrl: opt text;
+   isAvailable: opt bool;
+   name: opt text;
+ };
+type ProductRating = 
+ record {
+   productId: text;
+   rating: nat;
+ };
+type Product = 
+ record {
+   addOns: vec text;
+   basePrice: nat;
+   categoryId: text;
+   crusts: vec CrustVariant;
+   description: text;
+   id: text;
+   imageUrl: text;
+   isArchived: bool;
+   isAvailable: bool;
+   name: text;
+   rating: float64;
+   ratingCount: nat;
+   sizes: vec SizeVariant;
+ };
+type PointsTransaction = 
+ record {
+   createdAt: Time;
+   description: text;
+   id: text;
+   orderId: opt text;
+   points: int;
+   txnType: variant {
+              earned;
+              redeemed;
+            };
+   userId: principal;
+ };
+type OrderStatus = 
+ variant {
+   cancelled;
+   confirmed;
+   delivered;
+   out_for_delivery;
+   placed;
+   preparing;
+ };
+type OrderReview = 
+ record {
+   comment: opt text;
+   createdAt: Time;
+   customerId: principal;
+   id: text;
+   orderId: text;
+   overallRating: nat;
+   productRatings: vec ProductRating;
+ };
+type OrderOut = 
+ record {
+   cancellationReason: opt text;
+   couponCode: opt text;
+   customerId: principal;
+   deliveryAddress: text;
+   deliveryFee: nat;
+   deliveryPartnerId: opt principal;
+   deliveryPartnerLocation: opt DeliveryLocation;
+   discountAmount: nat;
+   estimatedDeliveryMinutes: nat;
+   id: text;
+   items: vec OrderItem;
+   paymentIntentId: opt text;
+   paymentRefunded: bool;
+   paymentVerified: bool;
+   placedAt: int;
+   status: OrderStatus;
+   subtotal: nat;
+   total: nat;
+   updatedAt: int;
+ };
+type OrderItem = 
+ record {
+   addOns: vec text;
+   crust: text;
+   imageUrl: text;
+   productId: text;
+   productName: text;
+   quantity: nat;
+   size: text;
+   totalPrice: nat;
+   unitPrice: nat;
+ };
+type NotificationType = 
+ variant {
+   couponExpiry;
+   orderCancelled;
+   orderConfirmed;
+   orderDelivered;
+   orderPreparing;
+   outForDelivery;
+   promoAlert;
+ };
+type NotificationPublic = 
+ record {
+   createdAt: Time;
+   id: text;
+   message: text;
+   notifType: NotificationType;
+   orderId: opt text;
+   read: bool;
+   title: text;
+   userId: principal;
+ };
+type NotifResult = 
+ variant {
+   err: text;
+   ok;
+ };
+type LoyaltyTier = 
+ variant {
+   bronze;
+   gold;
+   silver;
+ };
+type LoyaltyAccountPublic = 
+ record {
+   joinedAt: Time;
+   points: nat;
+   tier: LoyaltyTier;
+   totalPointsEarned: nat;
+   userId: principal;
+ };
+type DiscountType = 
+ variant {
+   bogo;
+   flat;
+   free_delivery;
+   percentage;
+ };
+type DeliveryLocation = 
+ record {
+   lat: float64;
+   lng: float64;
+ };
+type DeleteResult = 
+ variant {
+   err: text;
+   ok;
+ };
+type CrustVariant = 
+ record {
+   crust: Crust;
+   displayName: text;
+   extraPrice: nat;
+ };
+type Crust = 
+ variant {
+   hand_tossed;
+   stuffed;
+   thin;
+ };
+type CouponValidation = 
+ record {
+   discountAmount: nat;
+   isValid: bool;
+   message: text;
+ };
+type CouponPublic = 
+ record {
+   code: text;
+   discountType: DiscountType;
+   discountValue: nat;
+   expiresAt: opt Time;
+   freeProductId: opt text;
+   isActive: bool;
+   maxUsages: nat;
+   minOrderAmount: nat;
+   requiresMinQty: nat;
+   triggerProductId: opt text;
+   usageCount: nat;
+ };
+type Category = 
+ record {
+   description: text;
+   id: text;
+   imageUrl: text;
+   name: text;
+   sortOrder: nat;
+ };
+type CartItem = 
+ record {
+   productId: text;
+   quantity: nat;
+   unitPrice: nat;
+ };
+type BannerResult = 
+ variant {
+   err: text;
+   ok: PromoBannerPublic;
+ };
+type AuthResult = 
+ variant {
+   err: text;
+   ok: UserProfile;
+ };
+type AddressPublic = 
+ record {
+   city: text;
+   displayName: text;
+   id: text;
+   isDefault: bool;
+   lat: float64;
+   lng: float64;
+   "principal": principal;
+   state: text;
+   street: text;
+   zipCode: text;
+ };
+type AddOn = 
+ record {
+   category: text;
+   id: text;
+   name: text;
+   price: nat;
+ };
+service : {
+  acceptOrder: (orderId: text) -> (bool);
+  applyCoupon: (code: text, orderTotal: nat) -> (CouponValidation);
+  assignDeliveryPartner: (orderId: text, partnerId: principal) -> (bool);
+  autoApplyCoupon: (cartTotal: nat, cartItems: vec CartItem) ->
+   (opt CouponPublic);
+  cancelOrder: (orderId: text, reason: text) -> (text);
+  createAddOn: (addOn: AddOn) -> ();
+  createBanner: (title: text, description: text, imageUrl: text, ctaText:
+   text, ctaLink: text, couponCode: opt text, priority: nat) ->
+   (BannerResult);
+  createCategory: (category: Category) -> ();
+  createCoupon: (code: text, discountType: DiscountType, discountValue: 
+   nat, minOrderAmount: nat, maxUsages: nat, expiresAt: opt Time,
+   triggerProductId: opt text, freeProductId: opt text, requiresMinQty:
+   nat) -> (CouponPublic);
+  createProduct: (product: Product) -> ();
+  createProfile: (role: Role, name: text, phone: text) -> (AuthResult);
+  deleteAddOn: (addOnId: text) -> (bool);
+  deleteAddress: (id: text) -> (bool);
+  deleteBanner: (id: text) -> (DeleteResult);
+  deleteCategory: (categoryId: text) -> (text);
+  deleteProduct: (productId: text) -> (bool);
+  getActiveBanners: () -> (vec PromoBannerPublic) query;
+  getAddOns: () -> (vec AddOn) query;
+  getAddresses: () -> (vec AddressPublic) query;
+  getAllReviews: () -> (vec OrderReview);
+  getAllUsers: () -> (UsersResult) query;
+  getAvailableOrders: () -> (vec OrderOut) query;
+  getCategories: () -> (vec Category) query;
+  getCoupons: () -> (vec CouponPublic) query;
+  getDeliveryFee: (addressId: text) ->
+   (opt record {
+          distanceKm: float64;
+          estimatedMinutes: nat;
+          feeInCents: nat;
+        }) query;
+  getLoyaltyAccount: () -> (opt LoyaltyAccountPublic);
+  getMyAssignedOrders: () -> (vec OrderOut) query;
+  getMyNotifications: () -> (vec NotificationPublic);
+  getMyOrders: () -> (vec OrderOut) query;
+  getOrder: (id: text) -> (opt OrderOut) query;
+  getOrderForReorder: (orderId: text) ->
+   (variant {
+      err: text;
+      ok: vec OrderItem;
+    }) query;
+  getOrderReview: (orderId: text) -> (opt OrderReview) query;
+  getOrderStats: () ->
+   (opt
+     record {
+       activeDeliveries: nat;
+       avgOrderValue: nat;
+       cancelledCount: nat;
+       confirmedCount: nat;
+       deliveredCount: nat;
+       outForDelivery: nat;
+       placedCount: nat;
+       preparingCount: nat;
+       todayOrders: nat;
+       todayRevenue: nat;
+       totalOrders: nat;
+       totalRevenue: nat;
+     }) query;
+  getOrdersByStatus: (status: OrderStatus) -> (vec OrderOut) query;
+  getPartnerStats: () ->
+   (record {
+      activeOrders: nat;
+      todayDeliveries: nat;
+      totalDelivered: nat;
+    }) query;
+  getPointsHistory: () -> (vec PointsTransaction);
+  getProduct: (id: text) -> (opt Product) query;
+  getProducts: () -> (vec Product) query;
+  getProductsByCategory: (categoryId: text) -> (vec Product) query;
+  getProfile: () -> (opt UserProfile) query;
+  getRole: () -> (Role) query;
+  getUnreadCount: () -> (nat);
+  isAuthenticated: () -> (bool) query;
+  markAllNotificationsRead: () -> ();
+  markNotificationRead: (id: text) -> (NotifResult);
+  placeOrder: (items: vec OrderItem, subtotal: nat, deliveryFee: nat,
+   discountAmount: nat, total: nat, couponCode: opt text, deliveryAddress:
+   text, estimatedDeliveryMinutes: nat) -> (OrderOut);
+  rejectOrder: (orderId: text) -> (bool);
+  saveAddress: (displayName: text, street: text, city: text, state: text,
+   zipCode: text, lat: float64, lng: float64) -> (AddressPublic);
+  setAdminRole: (targetPrincipal: principal, makeAdmin: bool) -> (AuthResult);
+  setDefaultAddress: (id: text) -> (bool);
+  submitOrderReview: (orderId: text, rating: nat, comment: opt text) ->
+   (ReviewResult);
+  toggleBannerActive: (id: text) -> (BannerResult);
+  updateAddOn: (addOnId: text, name: text, price: nat) -> (bool);
+  updateBanner: (id: text, title: opt text, description: opt text, imageUrl:
+   opt text, ctaText: opt text, ctaLink: opt text, couponCode: opt text,
+   priority: opt nat) -> (BannerResult);
+  updateCategory: (categoryId: text, name: text, imageUrl: opt text,
+   sortOrder: opt nat) -> (bool);
+  updateDeliveryLocation: (orderId: text, lat: float64, lng: float64) ->
+   (bool);
+  updateOrderStatus: (id: text, status: OrderStatus) -> (bool);
+  updateProduct: (productId: text, updates: ProductUpdate) -> (bool);
+  updateProfile: (name: text, phone: text) -> (AuthResult);
+  validateCoupon: (code: text, orderTotal: nat) -> (CouponValidation) query;
+  verifyAndConfirmOrder: (orderId: text, paymentIntentId: text) -> (bool);
+}

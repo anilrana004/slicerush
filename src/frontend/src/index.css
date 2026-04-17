@@ -1,0 +1,317 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: Fraunces;
+    --font-body: "DM Sans";
+    --font-mono: "JetBrains Mono";
+    --radius: 0.75rem;
+
+    --background: 0.98 0.01 45;
+    --foreground: 0.18 0.02 32;
+    --card: 0.99 0.01 45;
+    --card-foreground: 0.18 0.02 32;
+    --popover: 0.99 0.01 45;
+    --popover-foreground: 0.18 0.02 32;
+
+    --primary: 0.52 0.22 24;
+    --primary-foreground: 0.97 0 0;
+
+    --secondary: 0.64 0.18 48;
+    --secondary-foreground: 0.15 0.02 30;
+    --muted: 0.88 0.02 30;
+    --muted-foreground: 0.45 0.03 35;
+
+    --accent: 0.64 0.18 48;
+    --accent-foreground: 0.97 0 0;
+
+    --destructive: 0.55 0.22 25;
+    --destructive-foreground: 0.97 0 0;
+
+    --border: 0.92 0.01 40;
+    --input: 0.93 0.01 40;
+    --ring: 0.52 0.22 24;
+
+    --chart-1: 0.52 0.22 24;
+    --chart-2: 0.64 0.18 48;
+    --chart-3: 0.72 0.16 50;
+    --chart-4: 0.58 0.2 35;
+    --chart-5: 0.68 0.15 45;
+
+    --sidebar: 0.98 0.01 45;
+    --sidebar-foreground: 0.18 0.02 32;
+    --sidebar-primary: 0.52 0.22 24;
+    --sidebar-primary-foreground: 0.97 0 0;
+    --sidebar-accent: 0.64 0.18 48;
+    --sidebar-accent-foreground: 0.15 0.02 30;
+    --sidebar-border: 0.92 0.01 40;
+    --sidebar-ring: 0.52 0.22 24;
+
+    /* Order status semantic tokens */
+    --status-confirmed: 0.6 0.18 230;
+    --status-preparing: 0.65 0.18 55;
+    --status-delivery: 0.58 0.2 290;
+    --status-delivered: 0.52 0.18 145;
+    --status-success: 0.55 0.16 145;
+    --status-warning: 0.68 0.18 65;
+    --status-info: 0.62 0.16 230;
+  }
+
+  .dark {
+    --background: 0.12 0.01 25;
+    --foreground: 0.92 0.01 40;
+    --card: 0.16 0.01 28;
+    --card-foreground: 0.92 0.01 40;
+    --popover: 0.2 0.01 30;
+    --popover-foreground: 0.92 0.01 40;
+
+    --primary: 0.65 0.19 28;
+    --primary-foreground: 0.12 0.01 25;
+
+    --secondary: 0.72 0.16 50;
+    --secondary-foreground: 0.88 0.02 35;
+    --muted: 0.24 0.02 28;
+    --muted-foreground: 0.65 0.02 40;
+
+    --accent: 0.72 0.16 50;
+    --accent-foreground: 0.12 0.01 25;
+
+    --destructive: 0.65 0.19 22;
+    --destructive-foreground: 0.12 0.01 25;
+
+    --border: 0.22 0.01 26;
+    --input: 0.22 0.01 26;
+    --ring: 0.65 0.19 28;
+
+    --chart-1: 0.65 0.19 28;
+    --chart-2: 0.72 0.16 50;
+    --chart-3: 0.78 0.14 55;
+    --chart-4: 0.68 0.17 38;
+    --chart-5: 0.75 0.14 48;
+
+    --sidebar: 0.16 0.01 28;
+    --sidebar-foreground: 0.92 0.01 40;
+    --sidebar-primary: 0.65 0.19 28;
+    --sidebar-primary-foreground: 0.12 0.01 25;
+    --sidebar-accent: 0.72 0.16 50;
+    --sidebar-accent-foreground: 0.88 0.02 35;
+    --sidebar-border: 0.22 0.01 26;
+    --sidebar-ring: 0.65 0.19 28;
+
+    /* Admin UI extensions */
+    --status-success: 0.68 0.15 135;
+    --status-warning: 0.72 0.18 65;
+    --status-info: 0.72 0.16 50;
+    --table-row-hover: 0.2 0.01 28;
+    --table-row-stripe: 0.14 0.01 26;
+
+    /* Order status semantic tokens */
+    --status-confirmed: 0.65 0.18 230;
+    --status-preparing: 0.7 0.18 55;
+    --status-delivery: 0.63 0.2 290;
+    --status-delivered: 0.65 0.18 145;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("/assets/fonts/Fraunces.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/assets/fonts/DMSans.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-display: swap;
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-lift {
+    @apply transition-smooth hover:shadow-lg hover:scale-[1.02];
+  }
+
+  .skeleton {
+    @apply bg-muted animate-pulse rounded-lg;
+  }
+
+  /* Admin UI utilities */
+  .kpi-card {
+    @apply bg-card rounded-lg p-6 border border-border transition-smooth hover:shadow-elevated;
+  }
+
+  .kpi-accent-bar {
+    @apply absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-lg;
+  }
+
+  .table-row-hover {
+    @apply transition-smooth hover:bg-[oklch(var(--table-row-hover))];
+  }
+
+  .table-row-stripe {
+    @apply bg-[oklch(var(--table-row-stripe))];
+  }
+
+  .status-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-smooth;
+  }
+
+  .status-success {
+    @apply bg-[oklch(var(--status-success)/0.15)] text-[oklch(var(--status-success))];
+  }
+
+  .status-warning {
+    @apply bg-[oklch(var(--status-warning)/0.15)] text-[oklch(var(--status-warning))];
+  }
+
+  .status-info {
+    @apply bg-[oklch(var(--status-info)/0.15)] text-[oklch(var(--status-info))];
+  }
+
+  .status-destructive {
+    @apply bg-[oklch(var(--destructive)/0.15)] text-destructive;
+  }
+
+  .admin-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6;
+  }
+
+  .admin-table-container {
+    @apply rounded-lg border border-border overflow-hidden bg-card;
+  }
+
+  .admin-table-row {
+    @apply border-b border-border transition-smooth hover:bg-[oklch(var(--table-row-hover))];
+  }
+
+  /* Order Review Modal */
+  .review-modal-overlay {
+    @apply fixed inset-0 bg-black/50 flex items-center justify-center z-50;
+  }
+
+  .review-modal-card {
+    @apply bg-card rounded-lg p-8 max-w-md w-full mx-4 shadow-elevated relative border border-border;
+  }
+
+  .review-modal-accent {
+    @apply absolute left-0 top-0 h-1 w-full bg-gradient-to-r from-primary to-accent rounded-t-lg;
+  }
+
+  .star-rating {
+    @apply flex gap-2 justify-center my-6;
+  }
+
+  .star-button {
+    @apply text-4xl cursor-pointer transition-smooth hover:scale-110 duration-200;
+  }
+
+  /* Notifications Panel */
+  .notification-panel {
+    @apply fixed right-0 top-0 h-screen w-full sm:w-96 bg-card border-l border-border shadow-lg z-40 flex flex-col transition-smooth;
+  }
+
+  .notification-header {
+    @apply sticky top-0 bg-card border-b border-border px-6 py-4 flex items-center justify-between z-10;
+  }
+
+  .notification-bell-badge {
+    @apply relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/20 text-primary transition-smooth;
+  }
+
+  .notification-badge-dot {
+    @apply absolute top-1 right-1 w-2.5 h-2.5 bg-accent rounded-full animate-pulse;
+  }
+
+  .notification-list {
+    @apply flex-1 overflow-y-auto px-4 py-2;
+  }
+
+  .notification-item {
+    @apply bg-muted/40 rounded-lg p-4 mb-3 border-l-2 border-accent transition-smooth hover:bg-muted/60;
+  }
+
+  .notification-item.unread {
+    @apply bg-primary/10 border-l-primary;
+  }
+
+  /* Promotional Banner Carousel */
+  .carousel-container {
+    @apply relative w-full overflow-hidden rounded-lg bg-card border border-border;
+  }
+
+  .carousel-slide {
+    @apply relative w-full h-64 sm:h-80 bg-cover bg-center transition-transform duration-500;
+  }
+
+  .carousel-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex flex-col justify-end p-6;
+  }
+
+  .carousel-controls {
+    @apply absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10;
+  }
+
+  .carousel-dot {
+    @apply w-2 h-2 rounded-full bg-white/40 cursor-pointer transition-smooth hover:bg-white/60;
+  }
+
+  .carousel-dot.active {
+    @apply bg-accent w-6;
+  }
+
+  /* Profile Management Page */
+  .profile-header {
+    @apply relative h-40 bg-gradient-to-br from-primary/30 to-accent/20 rounded-lg mb-6 border border-border;
+  }
+
+  .profile-avatar {
+    @apply absolute -bottom-12 left-6 w-24 h-24 rounded-full border-4 border-card bg-muted shadow-lg flex items-center justify-center text-3xl;
+  }
+
+  .profile-section {
+    @apply bg-card rounded-lg p-6 mb-6 border border-border;
+  }
+
+  .profile-section-title {
+    @apply text-lg font-display font-semibold text-foreground mb-4;
+  }
+
+  .profile-field-group {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
+  }
+
+  .profile-field {
+    @apply bg-input rounded-lg px-4 py-3 text-foreground placeholder-muted-foreground border border-border focus:outline-none focus:ring-2 focus:ring-primary/50 transition-smooth;
+  }
+
+  /* Quick Reorder Button */
+  .quick-reorder-btn {
+    @apply relative inline-flex items-center gap-2 px-4 py-2.5 bg-accent/10 text-accent rounded-lg border border-accent/30 transition-smooth hover:bg-accent/20 hover:border-accent/60 hover:shadow-md;
+  }
+
+  .quick-reorder-btn::before {
+    @apply absolute inset-0 opacity-0 hover:opacity-10 bg-accent blur-lg -z-10 rounded-lg transition-smooth;
+  }
+
+  .quick-reorder-icon {
+    @apply w-4 h-4;
+  }
+}

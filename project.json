@@ -1,0 +1,27 @@
+{
+  "overview": "SliceRush is a Domino's-inspired food delivery platform with a Pinterest-style card UI. Customers browse a fully customizable menu, manage a cart with smart coupons, track orders in real time, and pay via Stripe. Delivery partners accept and manage their deliveries through a dedicated portal. Admins control the full platform from a comprehensive dashboard.",
+  "features": [
+    "Internet Identity login with customer and delivery partner roles",
+    "Pinterest-style menu with category filtering and real-time product search",
+    "Full product customization — size, crust, and add-ons with live price updates",
+    "Smart cart with BOGO coupons and auto-apply best discount logic",
+    "Address management with distance-based delivery fee calculation",
+    "Stripe-powered checkout with payment verification",
+    "Order tracking with automatic status polling",
+    "Order cancellation for placed/confirmed orders",
+    "Delivery partner portal — accept, reject, and update assigned orders",
+    "Full admin panel — dashboard KPIs, product CRUD, coupon management, order management, and user management"
+  ],
+  "category": "food-delivery",
+  "tags": [
+    "food-delivery",
+    "ecommerce",
+    "admin-panel",
+    "stripe",
+    "real-time-tracking",
+    "pizza",
+    "restaurant",
+    "order-management"
+  ],
+  "last_updated": "2026-04-16T14:17:50.734Z"
+}
